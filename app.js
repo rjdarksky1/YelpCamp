@@ -19,8 +19,15 @@ app.use(express.static(__dirname + '/public'));
 app.use(methodOverride('_method'));
 app.use(flash());
 
-mongoose.connect('mongodb://localhost/yelp_camp');
-//seedDB();
+mongoose.connect('mongodb://localhost/yelp_camp',
+    { useNewUrlParser: true, useUnifiedTopology: true }
+).then(() => {
+    console.log('connected to db');
+}).catch(err => {
+    console.log('failed to connect to db ' + err.message);
+});
+
+seedDB();
 
 
 // Passport Config
